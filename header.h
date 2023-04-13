@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 // Tim
 typedef struct tim
 {
@@ -14,3 +14,8 @@ typedef struct group
     char *namaGroup;
     Tim *pointer;
 } Group;
+
+Group *group[4];
+Tim *tim;
+
+void addteam(Group* group, char* namatim);

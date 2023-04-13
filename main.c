@@ -3,15 +3,13 @@
 #include "body.c"
 
 int main()
-{
-    Group *group[2];
-    Tim *tim;
-
-    tim = makeTim("Indonesia");
-    tim->next = makeTim("Inggris");
-    group[0] = makeGroup("Group A");
-    group[1] = makeGroup("Group B");
-    displayGroup(group, 2);
-    displayTim(tim);
+{   
+    FILE *fp = fopen("Team.txt", "r");
+    group [0] = makeGroup("A",fp);
+    group [1] = makeGroup("B",fp);
+    group [2] = makeGroup("C",fp);
+    group [3] = makeGroup("D",fp);
+    displayGroup(group, 4);
+    fclose(fp);
     return 0;
 }
