@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "header.h"
 
 Tim *makeTim(char *namaTim)
@@ -9,6 +7,9 @@ Tim *makeTim(char *namaTim)
     strcpy(tim->namaTim, namaTim);
     tim->next = NULL;
     tim->prev = NULL;
+    tim->gol = 0;
+    tim->jumlahgol = 0;
+    tim->skor = 0 ;
     return tim;
 }
 
@@ -56,15 +57,4 @@ void displayGroup(Group **group, int numsGroup)
             current = current->next;
         }
     }
-}
-
-void displayTim(Tim *tim)
-{
-    Tim *current = tim;
-    while (current != NULL)
-    {
-        printf("%s\n", current->namaTim);
-        current = current->next;
-    }
-    printf("\n");
 }
