@@ -17,9 +17,11 @@ Group *makeGroup(char *namaGroup, FILE *fp)
     Group *group = (Group *)malloc(sizeof(Group));
     group->namaGroup = namaGroup;
     group->pointer = NULL;
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++)
+    {
         char timName[50];
-        if (fscanf(fp, "%s", timName) == 1) {
+        if (fscanf(fp, "%s", timName) == 1)
+        {
             addteam(group, timName);
         }
         else
@@ -30,13 +32,18 @@ Group *makeGroup(char *namaGroup, FILE *fp)
     return group;
 }
 
-void addteam(Group* group, char* namatim){
-    Tim* newteam = makeTim(namatim);
-    if (group->pointer == NULL) {
+void addteam(Group *group, char *namatim)
+{
+    Tim *newteam = makeTim(namatim);
+    if (group->pointer == NULL)
+    {
         group->pointer = newteam;
-    } else {
-        Tim* current = group->pointer;
-        while (current->next != NULL) {
+    }
+    else
+    {
+        Tim *current = group->pointer;
+        while (current->next != NULL)
+        {
             current = current->next;
         }
         current->next = newteam;
@@ -56,15 +63,4 @@ void displayGroup(Group **group, int numsGroup)
             current = current->next;
         }
     }
-}
-
-void displayTim(Tim *tim)
-{
-    Tim *current = tim;
-    while (current != NULL)
-    {
-        printf("%s\n", current->namaTim);
-        current = current->next;
-    }
-    printf("\n");
 }
