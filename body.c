@@ -1,4 +1,5 @@
 #include "header.h"
+#include "conio.h"
 
 Tim *makeTim(char *namaTim)
 {
@@ -173,4 +174,78 @@ void resultmatch(Group** group,char* tim1, char* tim2)
 void match()
 {
     resultmatch(group,"Prancis","Brasil");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Portugal","Belanda");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Prancis","Portugal");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Brasil","Belanda");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Prancis","Belanda");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Brasil","Portugal");
+    printf("\n\nPress any key to continue...");
+    getch();
+
+    resultmatch(group,"Senegal","Inggris");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Amerika","Australia");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Senegal","Amerika");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Inggris","Australia");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Senegal","Australia");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Inggris","Amerika");
+    printf("\n\nPress any key to continue...");
+    getch();
+
+    resultmatch(group,"Argentina","Polandia");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Maroko","Kroasia");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Argentina","Maroko");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Polandia","Kroasia");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Argentina","Kroasia");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Polandia","Maroko");
+    printf("\n\nPress any key to continue...");
+    getch();
+
+    resultmatch(group,"Jepang","Spanyol");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Korea","Swiss");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Jepang","Korea");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Spanyol","Kroasia");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Jepang","Kroasia");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch(group,"Spanyol","Korea");
+    printf("\n\nPress any key to continue...");
+    getch();
 }
