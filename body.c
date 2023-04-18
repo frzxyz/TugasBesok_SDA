@@ -121,20 +121,22 @@ Tim *searchTeam(Group **group, char* key){
     return current;
 }
 
-void resultmatch(Group** group,char* tim1, char* tim2)
+void resultmatch(char* tim1, char* tim2)
 {
-    srand(time(NULL)); 
+    time_t t;
     int result;
     bool cek= true;
     Tim* team1 = searchTeam(group,tim1);
     Tim* team2 = searchTeam(group,tim2);
-    result = 1+rand()%3;
+    srand((unsigned) time(&t));
+    result = 1+rand() %3;
     if (result==1){
         team1->score = team1->score+0;
         team2 -> score = team2->score+3;
         while(cek==true){
-            team1->gol=rand()%7;
-            team2->gol=rand()%7;
+            srand((unsigned) time(&t));
+            team1->gol=rand() %8;
+            team2->gol=rand() %8;
             if(team1->gol<team2->gol){
                 team1->jumlahGol=team1->jumlahGol+team1->gol;
                 team2->jumlahGol=team2->jumlahGol+team2->gol;
@@ -146,8 +148,9 @@ void resultmatch(Group** group,char* tim1, char* tim2)
         team1->score = team1->score+3;
         team2 -> score = team2->score+0;
         while(cek==true){
-            team1->gol=rand()%7;
-            team2->gol=rand()%7;
+            srand((unsigned) time(&t));
+            team1->gol=rand() %8;
+            team2->gol=rand() %8;
             if(team1->gol>team2->gol){
                 team1->jumlahGol=team1->jumlahGol+team1->gol;
                 team2->jumlahGol=team2->jumlahGol+team2->gol;
@@ -159,8 +162,9 @@ void resultmatch(Group** group,char* tim1, char* tim2)
         team1->score = team1->score+1;
         team2 -> score = team2->score+1;
         while(cek==true){
-            team1->gol=rand()%7;
-            team2->gol=rand()%7;
+            srand((unsigned) time(&t));
+            team1->gol=rand() %8;
+            team2->gol=rand() %8;
             if(team1->gol==team2->gol){
                 team1->jumlahGol=team1->jumlahGol+team1->gol;
                 team2->jumlahGol=team2->jumlahGol+team2->gol;
@@ -168,84 +172,84 @@ void resultmatch(Group** group,char* tim1, char* tim2)
             }
         }
     }
-    printf("Hasil Match Sudah Ditentukan\n");
+    printf("Hasil Match Antara %s VS %s Sudah Ditentukan dengan skor %d : %d\n",team1->namaTim,team2->namaTim,team1->gol,team2->gol);
 }
 
 void match()
 {
-    resultmatch(group,"Prancis","Brasil");
+    resultmatch("Prancis","Brasil");
     printf("\n\nPress any key to continue...");
     getch();
-    resultmatch(group,"Portugal","Belanda");
+    resultmatch("Portugal","Belanda");
     printf("\n\nPress any key to continue...");
     getch();
-    resultmatch(group,"Prancis","Portugal");
+    resultmatch("Prancis","Portugal");
     printf("\n\nPress any key to continue...");
     getch();
-    resultmatch(group,"Brasil","Belanda");
+    resultmatch("Brasil","Belanda");
     printf("\n\nPress any key to continue...");
     getch();
-    resultmatch(group,"Prancis","Belanda");
+    resultmatch("Prancis","Belanda");
     printf("\n\nPress any key to continue...");
     getch();
-    resultmatch(group,"Brasil","Portugal");
-    printf("\n\nPress any key to continue...");
-    getch();
-
-    resultmatch(group,"Senegal","Inggris");
-    printf("\n\nPress any key to continue...");
-    getch();
-    resultmatch(group,"Amerika","Australia");
-    printf("\n\nPress any key to continue...");
-    getch();
-    resultmatch(group,"Senegal","Amerika");
-    printf("\n\nPress any key to continue...");
-    getch();
-    resultmatch(group,"Inggris","Australia");
-    printf("\n\nPress any key to continue...");
-    getch();
-    resultmatch(group,"Senegal","Australia");
-    printf("\n\nPress any key to continue...");
-    getch();
-    resultmatch(group,"Inggris","Amerika");
+    resultmatch("Brasil","Portugal");
     printf("\n\nPress any key to continue...");
     getch();
 
-    resultmatch(group,"Argentina","Polandia");
+    resultmatch("Senegal","Inggris");
     printf("\n\nPress any key to continue...");
     getch();
-    resultmatch(group,"Maroko","Kroasia");
+    resultmatch("Amerika","Australia");
     printf("\n\nPress any key to continue...");
     getch();
-    resultmatch(group,"Argentina","Maroko");
+    resultmatch("Senegal","Amerika");
     printf("\n\nPress any key to continue...");
     getch();
-    resultmatch(group,"Polandia","Kroasia");
+    resultmatch("Inggris","Australia");
     printf("\n\nPress any key to continue...");
     getch();
-    resultmatch(group,"Argentina","Kroasia");
+    resultmatch("Senegal","Australia");
     printf("\n\nPress any key to continue...");
     getch();
-    resultmatch(group,"Polandia","Maroko");
+    resultmatch("Inggris","Amerika");
     printf("\n\nPress any key to continue...");
     getch();
 
-    resultmatch(group,"Jepang","Spanyol");
+    resultmatch("Argentina","Polandia");
     printf("\n\nPress any key to continue...");
     getch();
-    resultmatch(group,"Korea","Swiss");
+    resultmatch("Maroko","Kroasia");
     printf("\n\nPress any key to continue...");
     getch();
-    resultmatch(group,"Jepang","Korea");
+    resultmatch("Argentina","Maroko");
     printf("\n\nPress any key to continue...");
     getch();
-    resultmatch(group,"Spanyol","Kroasia");
+    resultmatch("Polandia","Kroasia");
     printf("\n\nPress any key to continue...");
     getch();
-    resultmatch(group,"Jepang","Kroasia");
+    resultmatch("Argentina","Kroasia");
     printf("\n\nPress any key to continue...");
     getch();
-    resultmatch(group,"Spanyol","Korea");
+    resultmatch("Polandia","Maroko");
+    printf("\n\nPress any key to continue...");
+    getch();
+
+    resultmatch("Jepang","Spanyol");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch("Korea","Swiss");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch("Jepang","Korea");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch("Spanyol","Kroasia");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch("Jepang","Kroasia");
+    printf("\n\nPress any key to continue...");
+    getch();
+    resultmatch("Spanyol","Korea");
     printf("\n\nPress any key to continue...");
     getch();
 }
