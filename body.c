@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 #include "header.h"
 
 Tim *makeTim(char *namaTim)
@@ -99,4 +103,30 @@ void sortTeamByScore(Tim **head_ref)
             }
         }
     } while (swapped);
+}
+
+void golForAMatch(Tim **team)
+{
+    srand(time(NULL)); // seed the random number generator with the current time
+    int min = 0;
+    int max = 7;
+    int randomNumber = rand() % (max - min + 1) + min;
+    (*team)->gol = randomNumber;
+}
+
+void matchDecider(Tim **team1, Tim **team2)
+{
+    if ((*team1)->gol > (*team2)->gol)
+    {
+        (*team1)->score = (*team1)->score + 3;
+    }
+    else if ((*team1)->gol < (*team2)->gol)
+    {
+        (*team2)->score = (*team2)->score + 3;
+    }
+    else
+    {
+        (*team1)->score = (*team1)->score + 1;
+        (*team2)->score = (*team2)->score + 1;
+    }
 }
