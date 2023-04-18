@@ -69,40 +69,91 @@ void displayGroup(Group **group, int numsGroup)
     }
 }
 
-void sortTeamByScore(Tim **head_ref)
+void sortTeamByScore(Group **group)
 {
-    Tim *current, *temp;
-    int swapped;
-    do
+    for (int i = 0; i < 4; i++)
     {
-        swapped = 0;
-        current = *head_ref;
-        while (current->next != NULL)
+        Tim *current = group[i]->pointer;
+        int swapped;
+        do
         {
-            if (current->score < current->next->score)
+            swapped = 0;
+            while (current != NULL && current->next != NULL)
             {
-                temp = current->next;
-                current->next = temp->next;
-                temp->prev = current->prev;
-                current->prev = temp;
-                temp->next = current;
-                if (current == *head_ref)
+                if (current->score < current->next->score)
                 {
-                    *head_ref = temp;
+                    Tim *temp = current;
+                    current = current->next;
+                    if (temp->prev != NULL) {
+                        temp->prev->next = current;
+                        current->prev = temp->prev;
+                    } else {
+                        current->prev = NULL;
+                        group[i]->pointer = current;
+                    }
+                    if (current->next != NULL) {
+                        current->next->prev = temp;
+                        temp->next = current->next;
+                    } else {
+                        temp->next = NULL;
+                    }
+                    current->next = temp;
+                    temp->prev = current;
+                    swapped = 1;
                 }
                 else
                 {
-                    current->prev->next = temp;
+                    current = current->next;
                 }
-                swapped = 1;
             }
-            else
-            {
-                current = current->next;
-            }
-        }
-    } while (swapped);
+            current = group[i]->pointer;
+        } while (swapped);
+    }
 }
+
+void sortTeamByGoal(Group **group)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        Tim *current = group[i]->pointer;
+        int swapped;
+        do
+        {
+            swapped = 0;
+            while (current != NULL && current->next != NULL)
+            {
+                if ((current->jumlahGol < current->next->jumlahGol)&&(current->score==current->next->score))
+                {
+                    Tim *temp = current;
+                    current = current->next;
+                    if (temp->prev != NULL) {
+                        temp->prev->next = current;
+                        current->prev = temp->prev;
+                    } else {
+                        current->prev = NULL;
+                        group[i]->pointer = current;
+                    }
+                    if (current->next != NULL) {
+                        current->next->prev = temp;
+                        temp->next = current->next;
+                    } else {
+                        temp->next = NULL;
+                    }
+                    current->next = temp;
+                    temp->prev = current;
+                    swapped = 1;
+                }
+                else
+                {
+                    current = current->next;
+                }
+            }
+            current = group[i]->pointer;
+        } while (swapped);
+    }
+}
+
+
 Tim *searchTeam(Group **group, char* key){
     Tim *current;
     for (int i = 0; i < 4; i++)
@@ -250,6 +301,6 @@ void match()
     printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Spanyol","Korea");
-    printf("\n\nPress any key to continue...");
+    printf("\n\nPress any key to continue...\n");
     getch();
 }

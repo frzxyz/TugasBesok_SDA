@@ -8,6 +8,8 @@ int main()
     group [2] = makeGroup("C",fp);
     group [3] = makeGroup("D",fp);
     match();
+    sortTeamByScore(group);
+    sortTeamByGoal(group);
     displayGroup(group,4);
     fclose(fp);
     return 0;
