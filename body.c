@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
 #include "header.h"
 
 Tim *makeTim(char *namaTim)
@@ -59,14 +55,16 @@ void displayGroup(Group **group, int numsGroup)
 {
     for (int i = 0; i < numsGroup; i++)
     {
-        printf("%s\n", group[i]->namaGroup);
+        printf("%s", group[i]->namaGroup);
         Tim *current;
         current = group[i]->pointer;
         while (current != NULL)
         {
-            printf("%s\n\n", current->namaTim);
+            printf("\n");
+            printf("%-15s\tSkor: %-5d\tJumlah Gol: %-15d", current->namaTim,current->score,current->jumlahGol);
             current = current->next;
         }
+        printf("\n\n");
     }
 }
 
@@ -104,29 +102,75 @@ void sortTeamByScore(Tim **head_ref)
         }
     } while (swapped);
 }
-
-void golForAMatch(Tim **team)
-{
-    srand(time(NULL)); // seed the random number generator with the current time
-    int min = 0;
-    int max = 7;
-    int randomNumber = rand() % (max - min + 1) + min;
-    (*team)->gol = randomNumber;
+Tim *searchTeam(Group **group, char* key){
+    Tim *current;
+    for (int i = 0; i < 4; i++)
+    {   
+        current = group[i]->pointer;
+        while (current!=NULL)
+        {
+            if(strcmp(current->namaTim,key)==0){
+                return current;
+            }
+            else{
+                current = current->next;
+            }
+        }
+    }
+    return current;
 }
 
-void matchDecider(Tim **team1, Tim **team2)
+void resultmatch(Group** group,char* tim1, char* tim2)
 {
-    if ((*team1)->gol > (*team2)->gol)
-    {
-        (*team1)->score = (*team1)->score + 3;
+    srand(time(NULL)); 
+    int result;
+    bool cek= true;
+    Tim* team1 = searchTeam(group,tim1);
+    Tim* team2 = searchTeam(group,tim2);
+    result = 1+rand()%3;
+    if (result==1){
+        team1->score = team1->score+0;
+        team2 -> score = team2->score+3;
+        while(cek==true){
+            team1->gol=rand()%7;
+            team2->gol=rand()%7;
+            if(team1->gol<team2->gol){
+                team1->jumlahGol=team1->jumlahGol+team1->gol;
+                team2->jumlahGol=team2->jumlahGol+team2->gol;
+                cek=false;
+            }
+        }
     }
-    else if ((*team1)->gol < (*team2)->gol)
-    {
-        (*team2)->score = (*team2)->score + 3;
+    else if (result==2){
+        team1->score = team1->score+3;
+        team2 -> score = team2->score+0;
+        while(cek==true){
+            team1->gol=rand()%7;
+            team2->gol=rand()%7;
+            if(team1->gol>team2->gol){
+                team1->jumlahGol=team1->jumlahGol+team1->gol;
+                team2->jumlahGol=team2->jumlahGol+team2->gol;
+                cek=false;
+            }
+        }
     }
-    else
-    {
-        (*team1)->score = (*team1)->score + 1;
-        (*team2)->score = (*team2)->score + 1;
+    if (result==3){
+        team1->score = team1->score+1;
+        team2 -> score = team2->score+1;
+        while(cek==true){
+            team1->gol=rand()%7;
+            team2->gol=rand()%7;
+            if(team1->gol==team2->gol){
+                team1->jumlahGol=team1->jumlahGol+team1->gol;
+                team2->jumlahGol=team2->jumlahGol+team2->gol;
+                cek=false;
+            }
+        }
     }
+    printf("Hasil Match Sudah Ditentukan\n");
+}
+
+void match()
+{
+    resultmatch(group,"Prancis","Brasil");
 }

@@ -7,7 +7,7 @@ int main()
     group [1] = makeGroup("B",fp);
     group [2] = makeGroup("C",fp);
     group [3] = makeGroup("D",fp);
-    displayGroup(group, 4);
+    match();
     fclose(fp);
     return 0;
 }
