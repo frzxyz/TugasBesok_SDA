@@ -8,8 +8,8 @@ Tim *makeTim(char *namaTim)
     tim->next = NULL;
     tim->prev = NULL;
     tim->gol = 0;
-    tim->jumlahgol = 0;
-    tim->skor = 0 ;
+    tim->jumlahGol = 0;
+    tim->score = 0;
     return tim;
 }
 
@@ -66,3 +66,37 @@ void displayGroup(Group **group, int numsGroup)
     }
 }
 
+void sortTeamByScore(Tim **head_ref)
+{
+    Tim *current, *temp;
+    int swapped;
+    do
+    {
+        swapped = 0;
+        current = *head_ref;
+        while (current->next != NULL)
+        {
+            if (current->score < current->next->score)
+            {
+                temp = current->next;
+                current->next = temp->next;
+                temp->prev = current->prev;
+                current->prev = temp;
+                temp->next = current;
+                if (current == *head_ref)
+                {
+                    *head_ref = temp;
+                }
+                else
+                {
+                    current->prev->next = temp;
+                }
+                swapped = 1;
+            }
+            else
+            {
+                current = current->next;
+            }
+        }
+    } while (swapped);
+}

@@ -6,7 +6,7 @@ typedef struct tim
 {
     char *namaTim;
     struct tim *next, *prev;
-    int gol,jumlahgol,skor;
+    int gol, jumlahGol, score;
 } Tim;
 
 // Menyimpan grup
@@ -31,7 +31,7 @@ Membuat Group serta memanggil modul addteam untuk menyambungkan antara array gru
 IS: Grup belum dibuat dan node team belum terbentuk.
 FS: Grup telah dibuat dan tersambung ke node team-teamnya.
 */
-void addteam(Group* group, char* namatim);
+void addteam(Group *group, char *namatim);
 /*
 Modul Untuk menyambungkan antara array grup dan team dan memanggil fungsi maketim untuk membuat node tim.
 IS: Node team belum terbuat dan belum tersambung satu sama lain.
