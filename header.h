@@ -6,7 +6,7 @@
 // Tim
 typedef struct tim
 {
-    char *namaTim;
+    char *namaTim, *loseBy;
     struct tim *next, *prev;
     int gol, jumlahGol, score;
 } Tim;

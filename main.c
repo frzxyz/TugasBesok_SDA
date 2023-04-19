@@ -10,6 +10,7 @@ int main()
     match();
     sortTeamByScore(group);
     sortTeamByGoal(group);
+    sortTeamByHeadToHead(group);
     displayGroup(group,4);
     fclose(fp);
     return 0;

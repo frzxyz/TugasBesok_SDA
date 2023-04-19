@@ -183,6 +183,7 @@ void resultmatch(char* tim1, char* tim2)
     result = 1+rand() %3;
     if (result==1){
         team1->score = team1->score+0;
+        team1->loseBy = team2->namaTim;
         team2 -> score = team2->score+3;
         while(cek==true){
             srand((unsigned) time(&t));
@@ -198,6 +199,7 @@ void resultmatch(char* tim1, char* tim2)
     else if (result==2){
         team1->score = team1->score+3;
         team2 -> score = team2->score+0;
+        team2->loseBy = team1->namaTim;
         while(cek==true){
             srand((unsigned) time(&t));
             team1->gol=rand() %8;
@@ -229,78 +231,97 @@ void resultmatch(char* tim1, char* tim2)
 void match()
 {
     resultmatch("Prancis","Brasil");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Portugal","Belanda");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Prancis","Portugal");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Brasil","Belanda");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Prancis","Belanda");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Brasil","Portugal");
-    printf("\n\nPress any key to continue...");
     getch();
 
     resultmatch("Senegal","Inggris");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Amerika","Australia");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Senegal","Amerika");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Inggris","Australia");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Senegal","Australia");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Inggris","Amerika");
-    printf("\n\nPress any key to continue...");
     getch();
 
     resultmatch("Argentina","Polandia");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Maroko","Kroasia");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Argentina","Maroko");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Polandia","Kroasia");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Argentina","Kroasia");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Polandia","Maroko");
-    printf("\n\nPress any key to continue...");
     getch();
 
     resultmatch("Jepang","Spanyol");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Korea","Swiss");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Jepang","Korea");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Spanyol","Kroasia");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Jepang","Kroasia");
-    printf("\n\nPress any key to continue...");
     getch();
     resultmatch("Spanyol","Korea");
-    printf("\n\nPress any key to continue...\n");
+    printf("\n\nPress any key to continue...\n\n");
     getch();
+}
+
+void sortTeamByHeadToHead(Group **group)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        Tim *current = group[i]->pointer;
+        int swapped;
+        do
+        {
+            swapped = 0;
+            while (current != NULL && current->next != NULL)
+            {
+                if (current->score == current->next->score && (current->jumlahGol == current->next->jumlahGol) && (current->loseBy == current->next->namaTim))
+                {
+                    Tim *temp = current;
+                    current = current->next;
+                    if (temp->prev != NULL) {
+                        temp->prev->next = current;
+                        current->prev = temp->prev;
+                    } else {
+                        current->prev = NULL;
+                        group[i]->pointer = current;
+                    }
+                    if (current->next != NULL) {
+                        current->next->prev = temp;
+                        temp->next = current->next;
+                    } else {
+                        temp->next = NULL;
+                    }
+                    current->next = temp;
+                    temp->prev = current;
+                    swapped = 1;
+                }
+                else
+                {
+                    current = current->next;
+                }
+             }
+            current = group[i]->pointer;
+    }while (swapped);    
+}
 }
