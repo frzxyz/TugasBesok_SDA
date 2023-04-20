@@ -62,7 +62,7 @@ void displayGroup(Group **group, int numsGroup)
         while (current != NULL)
         {
             printf("\n");
-            printf("%-15s\tSkor: %-5d\tJumlah Gol: %-15d", current->namaTim,current->score,current->jumlahGol);
+            printf("%-15s\tSkor: %-5d\tJumlah Gol: %-15d", current->namaTim, current->score, current->jumlahGol);
             current = current->next;
         }
         printf("\n\n");
@@ -84,17 +84,23 @@ void sortTeamByScore(Group **group)
                 {
                     Tim *temp = current;
                     current = current->next;
-                    if (temp->prev != NULL) {
+                    if (temp->prev != NULL)
+                    {
                         temp->prev->next = current;
                         current->prev = temp->prev;
-                    } else {
+                    }
+                    else
+                    {
                         current->prev = NULL;
                         group[i]->pointer = current;
                     }
-                    if (current->next != NULL) {
+                    if (current->next != NULL)
+                    {
                         current->next->prev = temp;
                         temp->next = current->next;
-                    } else {
+                    }
+                    else
+                    {
                         temp->next = NULL;
                     }
                     current->next = temp;
@@ -122,21 +128,27 @@ void sortTeamByGoal(Group **group)
             swapped = 0;
             while (current != NULL && current->next != NULL)
             {
-                if ((current->jumlahGol < current->next->jumlahGol)&&(current->score==current->next->score))
+                if ((current->jumlahGol < current->next->jumlahGol) && (current->score == current->next->score))
                 {
                     Tim *temp = current;
                     current = current->next;
-                    if (temp->prev != NULL) {
+                    if (temp->prev != NULL)
+                    {
                         temp->prev->next = current;
                         current->prev = temp->prev;
-                    } else {
+                    }
+                    else
+                    {
                         current->prev = NULL;
                         group[i]->pointer = current;
                     }
-                    if (current->next != NULL) {
+                    if (current->next != NULL)
+                    {
                         current->next->prev = temp;
                         temp->next = current->next;
-                    } else {
+                    }
+                    else
+                    {
                         temp->next = NULL;
                     }
                     current->next = temp;
@@ -153,18 +165,20 @@ void sortTeamByGoal(Group **group)
     }
 }
 
-
-Tim *searchTeam(Group **group, char* key){
+Tim *searchTeam(Group **group, char *key)
+{
     Tim *current;
     for (int i = 0; i < 4; i++)
-    {   
+    {
         current = group[i]->pointer;
-        while (current!=NULL)
+        while (current != NULL)
         {
-            if(strcmp(current->namaTim,key)==0){
+            if (strcmp(current->namaTim, key) == 0)
+            {
                 return current;
             }
-            else{
+            else
+            {
                 current = current->next;
             }
         }
@@ -172,114 +186,123 @@ Tim *searchTeam(Group **group, char* key){
     return current;
 }
 
-void resultmatch(char* tim1, char* tim2)
+void resultmatch(char *tim1, char *tim2)
 {
     time_t t;
     int result;
-    bool cek= true;
-    Tim* team1 = searchTeam(group,tim1);
-    Tim* team2 = searchTeam(group,tim2);
-    srand((unsigned) time(&t));
-    result = 1+rand() %3;
-    if (result==1){
-        team1->score = team1->score+0;
+    bool cek = true;
+    Tim *team1 = searchTeam(group, tim1);
+    Tim *team2 = searchTeam(group, tim2);
+    srand((unsigned)time(&t));
+    result = 1 + rand() % 3;
+    if (result == 1)
+    {
+        team1->score = team1->score + 0;
         team1->loseBy = team2->namaTim;
-        team2 -> score = team2->score+3;
-        while(cek==true){
-            srand((unsigned) time(&t));
-            team1->gol=rand() %8;
-            team2->gol=rand() %8;
-            if(team1->gol<team2->gol){
-                team1->jumlahGol=team1->jumlahGol+team1->gol;
-                team2->jumlahGol=team2->jumlahGol+team2->gol;
-                cek=false;
+        team2->score = team2->score + 3;
+        while (cek == true)
+        {
+            srand((unsigned)time(&t));
+            team1->gol = rand() % 8;
+            team2->gol = rand() % 8;
+            if (team1->gol < team2->gol)
+            {
+                team1->jumlahGol = team1->jumlahGol + team1->gol;
+                team2->jumlahGol = team2->jumlahGol + team2->gol;
+                cek = false;
             }
         }
     }
-    else if (result==2){
-        team1->score = team1->score+3;
-        team2 -> score = team2->score+0;
+    else if (result == 2)
+    {
+        team1->score = team1->score + 3;
+        team2->score = team2->score + 0;
         team2->loseBy = team1->namaTim;
-        while(cek==true){
-            srand((unsigned) time(&t));
-            team1->gol=rand() %8;
-            team2->gol=rand() %8;
-            if(team1->gol>team2->gol){
-                team1->jumlahGol=team1->jumlahGol+team1->gol;
-                team2->jumlahGol=team2->jumlahGol+team2->gol;
-                cek=false;
+        while (cek == true)
+        {
+            srand((unsigned)time(&t));
+            team1->gol = rand() % 8;
+            team2->gol = rand() % 8;
+            if (team1->gol > team2->gol)
+            {
+                team1->jumlahGol = team1->jumlahGol + team1->gol;
+                team2->jumlahGol = team2->jumlahGol + team2->gol;
+                cek = false;
             }
         }
     }
-    if (result==3){
-        team1->score = team1->score+1;
-        team2 -> score = team2->score+1;
-        while(cek==true){
-            srand((unsigned) time(&t));
-            team1->gol=rand() %8;
-            team2->gol=rand() %8;
-            if(team1->gol==team2->gol){
-                team1->jumlahGol=team1->jumlahGol+team1->gol;
-                team2->jumlahGol=team2->jumlahGol+team2->gol;
-                cek=false;
+    if (result == 3)
+    {
+        team1->score = team1->score + 1;
+        team2->score = team2->score + 1;
+        while (cek == true)
+        {
+            srand((unsigned)time(&t));
+            team1->gol = rand() % 8;
+            team2->gol = rand() % 8;
+            if (team1->gol == team2->gol)
+            {
+                team1->jumlahGol = team1->jumlahGol + team1->gol;
+                team2->jumlahGol = team2->jumlahGol + team2->gol;
+                cek = false;
             }
         }
     }
-    printf("Hasil Match Antara %s VS %s Sudah Ditentukan dengan skor %d : %d\n",team1->namaTim,team2->namaTim,team1->gol,team2->gol);
+    printf("Hasil Match Antara %s VS %s Sudah Ditentukan dengan skor %d : %d\n", team1->namaTim, team2->namaTim, team1->gol, team2->gol);
 }
 
 void match()
 {
-    resultmatch("Prancis","Brasil");
+    resultmatch("Prancis", "Brasil");
     getch();
-    resultmatch("Portugal","Belanda");
+    resultmatch("Portugal", "Belanda");
     getch();
-    resultmatch("Prancis","Portugal");
+    resultmatch("Prancis", "Portugal");
     getch();
-    resultmatch("Brasil","Belanda");
+    resultmatch("Brasil", "Belanda");
     getch();
-    resultmatch("Prancis","Belanda");
+    resultmatch("Prancis", "Belanda");
     getch();
-    resultmatch("Brasil","Portugal");
-    getch();
-
-    resultmatch("Senegal","Inggris");
-    getch();
-    resultmatch("Amerika","Australia");
-    getch();
-    resultmatch("Senegal","Amerika");
-    getch();
-    resultmatch("Inggris","Australia");
-    getch();
-    resultmatch("Senegal","Australia");
-    getch();
-    resultmatch("Inggris","Amerika");
+    resultmatch("Brasil", "Portugal");
     getch();
 
-    resultmatch("Argentina","Polandia");
+    resultmatch("Senegal", "Inggris");
     getch();
-    resultmatch("Maroko","Kroasia");
+    resultmatch("Amerika", "Australia");
     getch();
-    resultmatch("Argentina","Maroko");
+    resultmatch("Senegal", "Amerika");
     getch();
-    resultmatch("Polandia","Kroasia");
+    resultmatch("Inggris", "Australia");
     getch();
-    resultmatch("Argentina","Kroasia");
+    resultmatch("Senegal", "Australia");
     getch();
-    resultmatch("Polandia","Maroko");
+    resultmatch("Inggris", "Amerika");
     getch();
 
-    resultmatch("Jepang","Spanyol");
+    resultmatch("Argentina", "Polandia");
     getch();
-    resultmatch("Korea","Swiss");
+    resultmatch("Maroko", "Kroasia");
     getch();
-    resultmatch("Jepang","Korea");
+    resultmatch("Argentina", "Maroko");
     getch();
-    resultmatch("Spanyol","Kroasia");
+    resultmatch("Polandia", "Kroasia");
     getch();
-    resultmatch("Jepang","Kroasia");
+    resultmatch("Argentina", "Kroasia");
     getch();
-    resultmatch("Spanyol","Korea");
+    resultmatch("Polandia", "Maroko");
+    getch();
+
+    resultmatch("Jepang", "Spanyol");
+    getch();
+    resultmatch("Korea", "Swiss");
+    getch();
+    resultmatch("Jepang", "Korea");
+    getch();
+    resultmatch("Spanyol", "Kroasia");
+    getch();
+    resultmatch("Jepang", "Kroasia");
+    getch();
+    resultmatch("Spanyol", "Korea");
     printf("\n\nPress any key to continue...\n\n");
     getch();
 }
@@ -299,17 +322,23 @@ void sortTeamByHeadToHead(Group **group)
                 {
                     Tim *temp = current;
                     current = current->next;
-                    if (temp->prev != NULL) {
+                    if (temp->prev != NULL)
+                    {
                         temp->prev->next = current;
                         current->prev = temp->prev;
-                    } else {
+                    }
+                    else
+                    {
                         current->prev = NULL;
                         group[i]->pointer = current;
                     }
-                    if (current->next != NULL) {
+                    if (current->next != NULL)
+                    {
                         current->next->prev = temp;
                         temp->next = current->next;
-                    } else {
+                    }
+                    else
+                    {
                         temp->next = NULL;
                     }
                     current->next = temp;
@@ -320,8 +349,28 @@ void sortTeamByHeadToHead(Group **group)
                 {
                     current = current->next;
                 }
-             }
+            }
             current = group[i]->pointer;
-    }while (swapped);    
+        } while (swapped);
+    }
 }
+
+Tim *createTree()
+{
+    Tim *leaf1, *leaf2, *leaf3, *leaf4;
+    Tim *root = (Tim *)malloc(sizeof(Tim));
+
+    root->prev = (Tim *)malloc(sizeof(Tim));
+    root->next = (Tim *)malloc(sizeof(Tim));
+
+    root->prev->prev = (Tim *)malloc(sizeof(Tim));
+    root->prev->next = (Tim *)malloc(sizeof(Tim));
+
+    root->next->prev = (Tim *)malloc(sizeof(Tim));
+    root->next->next = (Tim *)malloc(sizeof(Tim));
+
+    leaf1 = root->prev->prev;
+    leaf2 = root->prev->next;
+    leaf3 = root->next->prev;
+    leaf4 = root->next->next;
 }
