@@ -52,17 +52,26 @@ void addteam(Group *group, char *namatim)
         newteam->prev = current;
     }
 }
+
 void displayGroup(Group **group, int numsGroup)
 {
     for (int i = 0; i < numsGroup; i++)
     {
-        printf("%s", group[i]->namaGroup);
+        printf(" GROUP %s\n", group[i]->namaGroup);
+        printf("+------------------------------------------+\n");
+        printf("|    Team        |    Score   |    Goal    |\n");
+        printf("|----------------+------------+------------|\n");
         Tim *current;
         current = group[i]->pointer;
         while (current != NULL)
         {
-            printf("\n");
-            printf("%-15s\tSkor: %-5d\tJumlah Gol: %-15d", current->namaTim, current->score, current->jumlahGol);
+            printf("| %-15s|      %-6d|     %-7d|\n",current->namaTim,current->score,current->jumlahGol);
+            if(current->next != NULL){
+                printf("|----------------+------------+------------|\n");
+            }
+            else{
+                printf("+------------------------------------------+\n");
+            }
             current = current->next;
         }
         printf("\n\n");
@@ -248,64 +257,65 @@ void resultmatch(char *tim1, char *tim2)
             }
         }
     }
-    printf("Hasil Match Antara %s VS %s Sudah Ditentukan dengan skor %d : %d\n", team1->namaTim, team2->namaTim, team1->gol, team2->gol);
+    printf("Result %-7s VS %-7s = %d : %d\n", team1->namaTim, team2->namaTim, team1->gol, team2->gol);
 }
 
 void match()
 {
-    resultmatch("Prancis", "Brasil");
+    resultmatch("Prancis","Brasil");
     getch();
-    resultmatch("Portugal", "Belanda");
+    resultmatch("Portugal","Belanda");
     getch();
-    resultmatch("Prancis", "Portugal");
+    resultmatch("Prancis","Portugal");
     getch();
-    resultmatch("Brasil", "Belanda");
+    resultmatch("Brasil","Belanda");
     getch();
-    resultmatch("Prancis", "Belanda");
+    resultmatch("Prancis","Belanda");
     getch();
-    resultmatch("Brasil", "Portugal");
-    getch();
-
-    resultmatch("Senegal", "Inggris");
-    getch();
-    resultmatch("Amerika", "Australia");
-    getch();
-    resultmatch("Senegal", "Amerika");
-    getch();
-    resultmatch("Inggris", "Australia");
-    getch();
-    resultmatch("Senegal", "Australia");
-    getch();
-    resultmatch("Inggris", "Amerika");
+    resultmatch("Brasil","Portugal");
     getch();
 
-    resultmatch("Argentina", "Polandia");
+    resultmatch("Senegal","Inggris");
     getch();
-    resultmatch("Maroko", "Kroasia");
+    resultmatch("Amerika","Australia");
     getch();
-    resultmatch("Argentina", "Maroko");
+    resultmatch("Senegal","Amerika");
     getch();
-    resultmatch("Polandia", "Kroasia");
+    resultmatch("Inggris","Australia");
     getch();
-    resultmatch("Argentina", "Kroasia");
+    resultmatch("Senegal","Australia");
     getch();
-    resultmatch("Polandia", "Maroko");
+    resultmatch("Inggris","Amerika");
     getch();
 
-    resultmatch("Jepang", "Spanyol");
+    resultmatch("Argentina","Polandia");
     getch();
-    resultmatch("Korea", "Swiss");
+    resultmatch("Maroko","Kroasia");
     getch();
-    resultmatch("Jepang", "Korea");
+    resultmatch("Argentina","Maroko");
     getch();
-    resultmatch("Spanyol", "Kroasia");
+    resultmatch("Polandia","Kroasia");
     getch();
-    resultmatch("Jepang", "Kroasia");
+    resultmatch("Argentina","Kroasia");
     getch();
-    resultmatch("Spanyol", "Korea");
+    resultmatch("Polandia","Maroko");
+    getch();
+
+    resultmatch("Jepang","Spanyol");
+    getch();
+    resultmatch("Korea","Swiss");
+    getch();
+    resultmatch("Jepang","Korea");
+    getch();
+    resultmatch("Spanyol","Swiss");
+    getch();
+    resultmatch("Jepang","Swiss");
+    getch();
+    resultmatch("Spanyol","Korea");
     printf("\n\nPress any key to continue...\n\n");
     getch();
 }
+
 
 void sortTeamByHeadToHead(Group **group)
 {
