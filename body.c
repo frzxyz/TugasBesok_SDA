@@ -244,6 +244,8 @@ void resultmatch(char *tim1, char *tim2)
     {
         team1->score = team1->score + 1;
         team2->score = team2->score + 1;
+        team2->loseBy= team1->namaTim;
+        team1->loseBy= team2->namaTim;
         while (cek == true)
         {
             srand((unsigned)time(&t));
@@ -274,6 +276,7 @@ void match()
     getch();
     resultmatch("Brasil","Portugal");
     getch();
+    printf("\n\n");
 
     resultmatch("Senegal","Inggris");
     getch();
@@ -287,6 +290,7 @@ void match()
     getch();
     resultmatch("Inggris","Amerika");
     getch();
+    printf("\n\n");
 
     resultmatch("Argentina","Polandia");
     getch();
@@ -300,6 +304,7 @@ void match()
     getch();
     resultmatch("Polandia","Maroko");
     getch();
+    printf("\n\n");
 
     resultmatch("Jepang","Spanyol");
     getch();
@@ -316,6 +321,48 @@ void match()
     getch();
 }
 
+Tim *Penalty(char *Team1, char *Team2){
+    time_t t;
+    int result;
+    bool cek = true;
+    Tim *winner;
+    Tim *team1 = searchTeam(group, Team1);
+    Tim *team2 = searchTeam(group, Team2);
+    srand((unsigned)time(&t));
+    result = 1 + rand() % 2;
+    if(result == 1){
+        while (cek == true)
+        {
+            srand((unsigned)time(&t));
+            team1->gol = rand() % 5;
+            team2->gol = rand() % 5;
+            if (team1->gol > team2->gol)
+            {
+                team1->jumlahGol = team1->jumlahGol + team1->gol;
+                team2->jumlahGol = team2->jumlahGol + team2->gol;
+                cek = false;
+                winner = team2;
+            }
+        }
+    }
+    else if(result == 2){
+        while (cek == true)
+        {
+            srand((unsigned)time(&t));
+            team1->gol = rand() % 5;
+            team2->gol = rand() % 5;
+            if (team1->gol < team2->gol)
+            {
+                team1->jumlahGol = team1->jumlahGol + team1->gol;
+                team2->jumlahGol = team2->jumlahGol + team2->gol;
+                cek = false;
+                winner = team1;
+            }
+        }
+    }
+    printf("Result Penalty %-7s VS %-7s = %d : %d\n", team1->namaTim, team2->namaTim, team1->gol, team2->gol);
+    return winner;
+}
 
 void sortTeamByHeadToHead(Group **group)
 {
@@ -328,7 +375,10 @@ void sortTeamByHeadToHead(Group **group)
             swapped = 0;
             while (current != NULL && current->next != NULL)
             {
-                if (current->score == current->next->score && (current->jumlahGol == current->next->jumlahGol) && (current->loseBy == current->next->namaTim))
+                if ((current->score == current->next->score) && (current->jumlahGol == current->next->jumlahGol) && (current->loseBy == current->next->namaTim && current->next->loseBy == current->namaTim)){
+                    Penalty(current->namaTim,current->next->namaTim);
+                }
+                else if (current->score == current->next->score && (current->jumlahGol == current->next->jumlahGol) && (current->loseBy == current->next->namaTim))
                 {
                     Tim *temp = current;
                     current = current->next;
@@ -363,6 +413,7 @@ void sortTeamByHeadToHead(Group **group)
             current = group[i]->pointer;
         } while (swapped);
     }
+    sortTeamByGoal(group);
 }
 
 Tim *createTree()
