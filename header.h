@@ -20,6 +20,7 @@ typedef struct group
 
 Group *group[4];
 Tim *tim;
+Tim *tree;
 
 Tim *makeTim(char *namaTim);
 /*

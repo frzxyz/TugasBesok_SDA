@@ -11,6 +11,8 @@ int main()
     sortTeamByScore(group);
     sortTeamByGoal(group);
     sortTeamByHeadToHead(group);
+    clearTeam(group);
+    tree = createTree();
     displayGroup(group,4);
     fclose(fp);
     return 0;
