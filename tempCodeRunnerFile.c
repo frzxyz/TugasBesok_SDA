@@ -1,1 +1,1 @@
-sortTeamByScore(group);
+fclose(fp);
