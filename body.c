@@ -595,15 +595,15 @@ void clearTeam(Group **group){
 }
 
 void PrintTree(Tim *root){
-    printf("\n\t\t\t\t\t\t\t| %-7s |", root->namaTim);
-    printf("\n\t\t\t     ________________________________|______________________________");
-    printf("\n\t\t\t    |                                                               |");
-    printf("\n\t\t\t|%-7s|\t\t\t\t\t\t\t|%-7s|", root->left->namaTim,root->right->namaTim);
-    printf("\n\t      ______________|_______________\t\t\t\t      ______________|_______________");
-    printf("\n\t     |                              |\t\t\t\t     |                              |");
-    printf("\n\t|%-7s|\t\t\t|%-7s|\t\t\t|%-7s|\t\t\t|%-7s|", root->left->left->namaTim,root->left->right->namaTim,root->right->left->namaTim,root->right->right->namaTim);
-    printf("\n      _______|______\t\t     _______|_______\t\t      _______|_______\t\t     _______|_______");
-    printf("\n     |              |\t\t    |               |\t\t     |               |\t\t    |               |");
-    printf("\n|%-7s|\t|%-7s|\t|%-7s|\t|%-7s|",root->left->left->left->namaTim, root->left->left->right->namaTim,root->left->right->left->namaTim,root->left->right->right->namaTim);
-    printf("\t|%-7s|\t|%-7s|\t|%-7s|\t|%-7s|",root->right->left->left->namaTim, root->right->left->right->namaTim,root->right->right->left->namaTim,root->right->right->right->namaTim);
+    printf("\n\t\t\t\t\t\t\t         |%-7s|", root->namaTim);
+    printf("\n\t\t\t         ____________________________________|__________________________________");
+    printf("\n\t\t\t        |                                                                       |");
+    printf("\n\t\t        (%d) |%-7s|\t\t\t\t\t\t\t\t   |%-7s| (%d)",root->left->gol, root->left->namaTim,root->right->namaTim,root->right->gol);
+    printf("\n\t          ______________|___________________\t\t\t\t          ______________|___________________");
+    printf("\n\t         |                                  |\t\t\t\t         |                                  |");
+    printf("\n        (%d) |%-7s|\t\t\t       |%-7s| (%d)\t\t         (%d) |%-7s|\t\t        |%-7s| (%d)", root->left->left->gol, root->left->left->namaTim,root->left->right->namaTim, root->left->right->gol, root->right->left->gol,root->right->left->namaTim,root->right->right->namaTim, root->right->right->gol);
+    printf("\n          _______|______\t\t     _______|_______\t\t          _______|_______\t\t     _______|_______");
+    printf("\n         |              |\t\t    |               |\t\t         |               |\t\t    |               |");
+    printf("\n (%d) |%-7s|\t    |%-7s| (%d)   (%d) |%-7s|        |%-7s| (%d)", root->left->left->left->gol,root->left->left->left->namaTim, root->left->left->right->namaTim, root->left->left->right->gol, root->left->right->left->gol,root->left->right->left->namaTim,root->left->right->right->namaTim, root->left->right->right->gol);
+    printf(" (%d) |%-7s|\t     |%-7s| (%d)   (%d)|%-7s|\t|%-7s| (%d)", root->right->left->left->gol,root->right->left->left->namaTim, root->right->left->right->namaTim, root->right->left->right->gol, root->right->right->left->gol,root->right->right->left->namaTim,root->right->right->right->namaTim, root->right->right->right->gol);
 }
