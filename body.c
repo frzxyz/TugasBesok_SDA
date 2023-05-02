@@ -595,10 +595,15 @@ void clearTeam(Group **group){
 }
 
 void PrintTree(Tim *root){
-    printf("\n\t\t\t\t\t\t\t|%-7s|", root->namaTim);
-    printf("\n\t\t\t      _____________________________|_____________________________");
-    printf("\n\n\t\t\t|%-7s|\t\t\t\t\t\t\t|%-7s|", root->left->namaTim,root->right->namaTim);
-    printf("\n\n\t|%-7s|\t\t\t|%-7s|\t\t\t|%-7s|\t\t\t|%-7s|", root->left->left->namaTim,root->left->right->namaTim,root->right->left->namaTim,root->right->right->namaTim);
-    printf("\n\n|%-7s|\t|%-7s|\t|%-7s|\t|%-7s|",root->left->left->left->namaTim, root->left->left->right->namaTim,root->left->right->left->namaTim,root->left->right->right->namaTim);
+    printf("\n\t\t\t\t\t\t\t| %-7s |", root->namaTim);
+    printf("\n\t\t\t     ________________________________|______________________________");
+    printf("\n\t\t\t    |                                                               |");
+    printf("\n\t\t\t|%-7s|\t\t\t\t\t\t\t|%-7s|", root->left->namaTim,root->right->namaTim);
+    printf("\n\t      ______________|_______________\t\t\t\t      ______________|_______________");
+    printf("\n\t     |                              |\t\t\t\t     |                              |");
+    printf("\n\t|%-7s|\t\t\t|%-7s|\t\t\t|%-7s|\t\t\t|%-7s|", root->left->left->namaTim,root->left->right->namaTim,root->right->left->namaTim,root->right->right->namaTim);
+    printf("\n      _______|______\t\t     _______|_______\t\t      _______|_______\t\t     _______|_______");
+    printf("\n     |              |\t\t    |               |\t\t     |               |\t\t    |               |");
+    printf("\n|%-7s|\t|%-7s|\t|%-7s|\t|%-7s|",root->left->left->left->namaTim, root->left->left->right->namaTim,root->left->right->left->namaTim,root->left->right->right->namaTim);
     printf("\t|%-7s|\t|%-7s|\t|%-7s|\t|%-7s|",root->right->left->left->namaTim, root->right->left->right->namaTim,root->right->right->left->namaTim,root->right->right->right->namaTim);
 }
