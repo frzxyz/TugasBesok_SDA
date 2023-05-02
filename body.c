@@ -507,52 +507,52 @@ Tim *createTree()
     Tim *Sm1, *Sm2, *Sm3, *Sm4, *final1, *final2;
     Tim *root = (Tim *)malloc(sizeof(Tim));
 
-    root->prev = (Tim *)malloc(sizeof(Tim));
-    final1 = root->prev;
-    root->next = (Tim *)malloc(sizeof(Tim));
-    final2 = root->next;
+    root->left = (Tim *)malloc(sizeof(Tim));
+    final1 = root->left;
+    root->right = (Tim *)malloc(sizeof(Tim));
+    final2 = root->right;
 
-    root->prev->prev = (Tim *)malloc(sizeof(Tim));
-    Sm1 = root->prev->prev;
-    root->prev->next = (Tim *)malloc(sizeof(Tim));
-    Sm2 = root->prev->next;
+    root->left->left = (Tim *)malloc(sizeof(Tim));
+    Sm1 = root->left->left;
+    root->left->right = (Tim *)malloc(sizeof(Tim));
+    Sm2 = root->left->right;
 
-    root->next->prev = (Tim *)malloc(sizeof(Tim));
-    Sm3 = root->next->prev; 
-    root->next->next = (Tim *)malloc(sizeof(Tim));
-    Sm4 = root->next->next;
+    root->right->left = (Tim *)malloc(sizeof(Tim));
+    Sm3 = root->right->left; 
+    root->right->right = (Tim *)malloc(sizeof(Tim));
+    Sm4 = root->right->right;
 
-    root->prev->prev->prev = (Tim *)malloc(sizeof(Tim));
+    root->left->left->left = (Tim *)malloc(sizeof(Tim));
     leaf1 = group[0]->pointer;
-    root->prev->prev->prev =leaf1;
+    root->left->left->left =leaf1;
 
-    root->prev->prev->next = (Tim *)malloc(sizeof(Tim));
+    root->left->left->right = (Tim *)malloc(sizeof(Tim));
     leaf2 = group[1]->pointer->next;
-    root->prev->prev->next=leaf2;
+    root->left->left->right=leaf2;
 
-    root->prev->next->prev = (Tim *)malloc(sizeof(Tim));
+    root->left->right->left = (Tim *)malloc(sizeof(Tim));
     leaf3 = group[1]->pointer;
-    root->prev->next->prev = leaf3;
+    root->left->right->left = leaf3;
 
-    root->prev->next->next = (Tim *)malloc(sizeof(Tim));
+    root->left->right->right = (Tim *)malloc(sizeof(Tim));
     leaf4 = group[0]->pointer->next;
-    root->prev->next->next = leaf4;
+    root->left->right->right = leaf4;
 
-    root->next->prev->prev = (Tim *)malloc(sizeof(Tim));
+    root->right->left->left = (Tim *)malloc(sizeof(Tim));
     leaf5 = group[2]->pointer;
-    root->next->prev->prev = leaf5;
+    root->right->left->left = leaf5;
 
-    root->next->prev->next = (Tim *)malloc(sizeof(Tim));
+    root->right->left->right = (Tim *)malloc(sizeof(Tim));
     leaf6 = group[3]->pointer->next;
-    root->next->prev->next = leaf6;
+    root->right->left->right = leaf6;
 
-    root->next->next->prev = (Tim *)malloc(sizeof(Tim));
+    root->right->right->left = (Tim *)malloc(sizeof(Tim));
     leaf7 = group[3]->pointer;
-    root->next->next->prev = leaf7;
+    root->right->right->left = leaf7;
 
-    root->next->next->next = (Tim *)malloc(sizeof(Tim));
+    root->right->right->right = (Tim *)malloc(sizeof(Tim));
     leaf8 = group[2]->pointer->next;
-    root->next->next->next = leaf8;
+    root->right->right->right = leaf8;
 
     MatchTree(leaf1,leaf2);
     Sm1=winnerMoveToParent(leaf1,leaf2);
@@ -601,7 +601,7 @@ void PrintTree(Tim *root){
     printf("\n\t\t        (%d) |%-7s|\t\t\t\t\t\t\t\t   |%-7s| (%d)",root->left->gol, root->left->namaTim,root->right->namaTim,root->right->gol);
     printf("\n\t          ______________|___________________\t\t\t\t          ______________|___________________");
     printf("\n\t         |                                  |\t\t\t\t         |                                  |");
-    printf("\n        (%d) |%-7s|\t\t\t       |%-7s| (%d)\t\t         (%d) |%-7s|\t\t        |%-7s| (%d)", root->left->left->gol, root->left->left->namaTim,root->left->right->namaTim, root->left->right->gol, root->right->left->gol,root->right->left->namaTim,root->right->right->namaTim, root->right->right->gol);
+    printf("\n        (%d) |%-7s|\t\t\t       |%-7s| (%d)\t\t         (%d) |%-7s|                         |%s| (%d)", root->left->left->gol, root->left->left->namaTim,root->left->right->namaTim, root->left->right->gol, root->right->left->gol,root->right->left->namaTim,root->right->right->namaTim, root->right->right->gol);
     printf("\n          _______|______\t\t     _______|_______\t\t          _______|_______\t\t     _______|_______");
     printf("\n         |              |\t\t    |               |\t\t         |               |\t\t    |               |");
     printf("\n (%d) |%-7s|\t    |%-7s| (%d)   (%d) |%-7s|        |%-7s| (%d)", root->left->left->left->gol,root->left->left->left->namaTim, root->left->left->right->namaTim, root->left->left->right->gol, root->left->right->left->gol,root->left->right->left->namaTim,root->left->right->right->namaTim, root->left->right->right->gol);
