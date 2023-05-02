@@ -422,80 +422,6 @@ void sortTeamByHeadToHead(Group **group)
     sortTeamByGoal(group);
 }
 
-Tim *createTree()
-{
-    Tim *leaf1, *leaf2, *leaf3, *leaf4, *leaf5, *leaf6, *leaf7, *leaf8;
-    Tim *Sm1, *Sm2, *Sm3, *Sm4, *final1, *final2;
-    Tim *root = (Tim *)malloc(sizeof(Tim));
-
-    root->prev = (Tim *)malloc(sizeof(Tim));
-    final1 = root->prev;
-    root->next = (Tim *)malloc(sizeof(Tim));
-    final2 = root->next;
-
-    root->prev->prev = (Tim *)malloc(sizeof(Tim));
-    Sm1 = root->prev->prev;
-    root->prev->next = (Tim *)malloc(sizeof(Tim));
-    Sm2 = root->prev->next;
-
-    root->next->prev = (Tim *)malloc(sizeof(Tim));
-    Sm3 = root->next->prev; 
-    root->next->next = (Tim *)malloc(sizeof(Tim));
-    Sm4 = root->next->next;
-
-    root->prev->prev->prev = (Tim *)malloc(sizeof(Tim));
-    root->prev->prev->prev = group[0]->pointer;
-    root->prev->prev->next = (Tim *)malloc(sizeof(Tim));
-    root->prev->prev->prev = group[1]->pointer->next;
-
-    root->prev->next->prev = (Tim *)malloc(sizeof(Tim));
-    root->prev->next->prev = group[1]->pointer;
-    root->prev->next->next = (Tim *)malloc(sizeof(Tim));
-    root->prev->next->next = group[0]->pointer->next;
-
-    root->next->prev->prev = (Tim *)malloc(sizeof(Tim));
-    root->next->prev->prev = group[2]->pointer;
-    root->next->prev->next = (Tim *)malloc(sizeof(Tim));
-    root->next->prev->next = group[3]->pointer->next;
-
-    root->next->next->prev = (Tim *)malloc(sizeof(Tim));
-    root->next->next->prev = group[3]->pointer;
-    root->next->next->next = (Tim *)malloc(sizeof(Tim));
-    root->next->next->next = group[2]->pointer->next;
-
-    leaf1 = root->prev->prev->prev;
-    leaf2 = root->prev->prev->next;
-    leaf3 = root->prev->next->prev;
-    leaf4 = root->prev->next->next;
-    leaf5 = root->next->prev->prev;
-    leaf6 = root->next->prev->next;
-    leaf7 = root->next->next->prev;
-    leaf8 = root->next->next->next;
-
-    MatchTree(leaf1,leaf2);
-    Sm1=winnerMoveToParent(leaf1,leaf2);
-
-    MatchTree(leaf3,leaf4);
-    Sm2=winnerMoveToParent(leaf3,leaf4);
-
-    MatchTree(leaf5,leaf6);
-    Sm3=winnerMoveToParent(leaf5,leaf6);
-
-    MatchTree(leaf7,leaf8);
-    Sm4=winnerMoveToParent(leaf7,leaf8);
-
-    MatchTree(Sm1,Sm2);
-    final1=winnerMoveToParent(Sm1,Sm2);
-
-    MatchTree(Sm3,Sm4);
-    final2=winnerMoveToParent(Sm3,Sm4);
-
-    MatchTree(final1,final2);
-    root=winnerMoveToParent(final1,final2);
-
-    return root;
-}
-
 Tim *winnerMoveToParent(Tim *leftChild, Tim *rightChild)
 {
     // Check apakah leftChild atau rightChild NULL
@@ -528,11 +454,6 @@ Tim *winnerMoveToParent(Tim *leftChild, Tim *rightChild)
     parent->left = leftChild;
     parent->right = rightChild;
 
-    // Update the parent's pointers
-    leftChild->prev = parent;
-    rightChild->prev = parent;
-    leftChild->next = rightChild;
-    rightChild->next = NULL;
 
     // Return the parent node
     return parent;
@@ -543,7 +464,7 @@ void MatchTree(Tim *left, Tim *right){
     int result;
     bool cek = true;
     srand((unsigned)time(&t));
-    result = 1 + rand() % 3;
+    result = 1 + rand() % 2;
     if (result == 1)
     {
         left->score = left->score + 0;
@@ -565,7 +486,6 @@ void MatchTree(Tim *left, Tim *right){
     {
         left->score = left->score + 3;
         right->score = right->score + 0;
-        right->loseBy = left->namaTim;
         while (cek == true)
         {
             srand((unsigned)time(&t));
@@ -581,6 +501,83 @@ void MatchTree(Tim *left, Tim *right){
     }
 }
 
+Tim *createTree()
+{
+    Tim *leaf1, *leaf2, *leaf3, *leaf4, *leaf5, *leaf6, *leaf7, *leaf8;
+    Tim *Sm1, *Sm2, *Sm3, *Sm4, *final1, *final2;
+    Tim *root = (Tim *)malloc(sizeof(Tim));
+
+    root->prev = (Tim *)malloc(sizeof(Tim));
+    final1 = root->prev;
+    root->next = (Tim *)malloc(sizeof(Tim));
+    final2 = root->next;
+
+    root->prev->prev = (Tim *)malloc(sizeof(Tim));
+    Sm1 = root->prev->prev;
+    root->prev->next = (Tim *)malloc(sizeof(Tim));
+    Sm2 = root->prev->next;
+
+    root->next->prev = (Tim *)malloc(sizeof(Tim));
+    Sm3 = root->next->prev; 
+    root->next->next = (Tim *)malloc(sizeof(Tim));
+    Sm4 = root->next->next;
+
+    root->prev->prev->prev = (Tim *)malloc(sizeof(Tim));
+    leaf1 = group[0]->pointer;
+    root->prev->prev->prev =leaf1;
+
+    root->prev->prev->next = (Tim *)malloc(sizeof(Tim));
+    leaf2 = group[1]->pointer->next;
+    root->prev->prev->next=leaf2;
+
+    root->prev->next->prev = (Tim *)malloc(sizeof(Tim));
+    leaf3 = group[1]->pointer;
+    root->prev->next->prev = leaf3;
+
+    root->prev->next->next = (Tim *)malloc(sizeof(Tim));
+    leaf4 = group[0]->pointer->next;
+    root->prev->next->next = leaf4;
+
+    root->next->prev->prev = (Tim *)malloc(sizeof(Tim));
+    leaf5 = group[2]->pointer;
+    root->next->prev->prev = leaf5;
+
+    root->next->prev->next = (Tim *)malloc(sizeof(Tim));
+    leaf6 = group[3]->pointer->next;
+    root->next->prev->next = leaf6;
+
+    root->next->next->prev = (Tim *)malloc(sizeof(Tim));
+    leaf7 = group[3]->pointer;
+    root->next->next->prev = leaf7;
+
+    root->next->next->next = (Tim *)malloc(sizeof(Tim));
+    leaf8 = group[2]->pointer->next;
+    root->next->next->next = leaf8;
+
+    MatchTree(leaf1,leaf2);
+    Sm1=winnerMoveToParent(leaf1,leaf2);
+
+    MatchTree(leaf3,leaf4);
+    Sm2=winnerMoveToParent(leaf3,leaf4);
+
+    MatchTree(leaf5,leaf6);
+    Sm3=winnerMoveToParent(leaf5,leaf6);
+
+    MatchTree(leaf7,leaf8);
+    Sm4=winnerMoveToParent(leaf7,leaf8);
+
+    MatchTree(Sm1,Sm2);
+    final1=winnerMoveToParent(Sm1,Sm2);
+
+    MatchTree(Sm3,Sm4);
+    final2=winnerMoveToParent(Sm3,Sm4);
+
+    MatchTree(final1,final2);
+    root=winnerMoveToParent(final1,final2);
+
+    return root;
+}
+
 void clearTeam(Group **group){
     for (int i = 0; i < 4; i++)
     {
@@ -589,10 +586,19 @@ void clearTeam(Group **group){
         current = group[i]->pointer;
         while (current != NULL)
         {
-            current->gol = NULL;
-            current->jumlahGol = NULL;
-            current->score = NULL;
+            current->gol = 0L;
+            current->jumlahGol = 0L;
+            current->score = 0L;
             current = current->next;
         }
     }
+}
+
+void PrintTree(Tim *root){
+    printf("\n\t\t\t\t\t\t\t|%-7s|", root->namaTim);
+    printf("\n\t\t\t      _____________________________|_____________________________");
+    printf("\n\n\t\t\t|%-7s|\t\t\t\t\t\t\t|%-7s|", root->left->namaTim,root->right->namaTim);
+    printf("\n\n\t|%-7s|\t\t\t|%-7s|\t\t\t|%-7s|\t\t\t|%-7s|", root->left->left->namaTim,root->left->right->namaTim,root->right->left->namaTim,root->right->right->namaTim);
+    printf("\n\n|%-7s|\t|%-7s|\t|%-7s|\t|%-7s|",root->left->left->left->namaTim, root->left->left->right->namaTim,root->left->right->left->namaTim,root->left->right->right->namaTim);
+    printf("\t|%-7s|\t|%-7s|\t|%-7s|\t|%-7s|",root->right->left->left->namaTim, root->right->left->right->namaTim,root->right->right->left->namaTim,root->right->right->right->namaTim);
 }
