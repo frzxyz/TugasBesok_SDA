@@ -505,42 +505,52 @@ Tim *winnerMoveToParent(Tim *leftChild, Tim *rightChild)
     return parent;
 }
 
-void MatchTree(Tim *left, Tim *right){
+void MatchTree(Tim *team1, Tim *team2){
     time_t t;
     int result;
     bool cek = true;
+    Tim *left = searchTeam(group, team1->namaTim);
+    Tim *right = searchTeam(group, team2->namaTim);
     srand((unsigned)time(&t));
     result = 1 + rand() % 2;
     if (result == 1)
     {
-        left->score = left->score + 0;
-        right->score = right->score + 3;
+        team1->score = team1->score + 0;
+        team2->score = team2->score + 3;
+        team1->lose = team1->lose + 1;
+        team2->win = team2->win +1;
         while (cek == true)
         {
             srand((unsigned)time(&t));
-            left->gol = rand() % 8;
-            right->gol = rand() % 8;
-            if (left->gol < right->gol)
+            team1->gol = rand() % 8;
+            team2->gol = rand() % 8;
+            if (team1->gol < team2->gol)
             {
-                left->jumlahGol = left->jumlahGol + left->gol;
-                right->jumlahGol = right->jumlahGol + right->gol;
+                team1->jumlahGol = team1->jumlahGol + team1->gol;
+                team2->jumlahGol = team2->jumlahGol + team2->gol;
+                add_history(left,team1->gol,"Lose",team2->namaTim);
+                add_history(right,team2->gol,"Win",team1->namaTim);
                 cek = false;
             }
         }
     }
     else
     {
-        left->score = left->score + 3;
-        right->score = right->score + 0;
+        team1->score = team1->score + 3;
+        team2->score = team2->score + 0;
+        team1->win = team1->win + 1;
+        team2->lose = team2->lose + 1;
         while (cek == true)
         {
             srand((unsigned)time(&t));
-            left->gol = rand() % 8;
-            right->gol = rand() % 8;
-            if (left->gol > right->gol)
+            team1->gol = rand() % 8;
+            team2->gol = rand() % 8;
+            if (team1->gol > team2->gol)
             {
-                left->jumlahGol = left->jumlahGol + left->gol;
-                right->jumlahGol = right->jumlahGol + right->gol;
+                team1->jumlahGol = team1->jumlahGol + team1->gol;
+                team2->jumlahGol = team2->jumlahGol + team2->gol;
+                add_history(left,team1->gol,"Win",team2->namaTim);
+                add_history(right,team2->gol,"Lose",team1->namaTim);
                 cek = false;
             }
         }
