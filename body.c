@@ -62,21 +62,21 @@ void displayGroup(Group **group, int numsGroup)
     for (int i = 0; i < numsGroup; i++)
     {
         printf(" GROUP %s\n", group[i]->namaGroup);
-        printf("+------------------------------------------+\n");
-        printf("|    Team        |    Score   |    Goal    |\n");
-        printf("|----------------+------------+------------|\n");
+        printf("+------------------------------------------+-----------+------------+------------+\n");
+        printf("|    Team        |    Score   |    Goal    |    Win    |    Lose    |    Draw    |\n");
+        printf("|----------------+------------+------------+-----------+------------+------------|\n");
         Tim *current;
         current = group[i]->pointer;
         while (current != NULL)
         {
-            printf("| %-15s|      %-6d|     %-7d|\n", current->namaTim, current->score, current->jumlahGol);
+            printf("| %-15s|      %-6d|     %-7d|     %-6d|     %-7d|     %-7d|\n", current->namaTim, current->score, current->jumlahGol,current->win,current->lose,current->draw);
             if (current->next != NULL)
             {
-                printf("|----------------+------------+------------|\n");
+                printf("|----------------+------------+------------+-----------+------------+------------|\n");
             }
             else
             {
-                printf("+------------------------------------------+\n");
+                printf("+--------------------------------------------------------------------------------+\n");
             }
             current = current->next;
         }
@@ -248,7 +248,7 @@ void resultmatch(char *tim1, char *tim2)
             {
                 team1->jumlahGol = team1->jumlahGol + team1->gol;
                 team2->jumlahGol = team2->jumlahGol + team2->gol;
-                add_history(team1,team1->gol,"lose",team2->namaTim);
+                add_history(team1,team1->gol,"Lose",team2->namaTim);
                 add_history(team2,team2->gol,"Win",team1->namaTim);
                 cek = false;
             }
@@ -269,7 +269,7 @@ void resultmatch(char *tim1, char *tim2)
             {
                 team1->jumlahGol = team1->jumlahGol + team1->gol;
                 team2->jumlahGol = team2->jumlahGol + team2->gol;
-                add_history(team2,team2->gol,"lose",team1->namaTim);
+                add_history(team2,team2->gol,"Lose",team1->namaTim);
                 add_history(team1,team1->gol,"Win",team2->namaTim);
                 cek = false;
             }
@@ -301,7 +301,7 @@ void resultmatch(char *tim1, char *tim2)
 
 void match1()
 {
-    printf("\n\t\tWeek 1");
+    printf("\n\t\tWeek 1\n");
     resultmatch("Prancis", "Brasil");
     getch();
     resultmatch("Portugal", "Belanda");
@@ -325,7 +325,7 @@ void match1()
 
 void match2()
 {
-    printf("\n\t\tWeek 2");
+    printf("\n\t\tWeek 2\n");
     resultmatch("Prancis", "Portugal");
     getch();
     resultmatch("Brasil", "Belanda");
@@ -348,7 +348,7 @@ void match2()
 
 void match3()
 {
-    printf("\n\t\tWeek 3");
+    printf("\n\t\tWeek 3\n");
     resultmatch("Prancis", "Belanda");
     getch();
     resultmatch("Brasil", "Portugal");
@@ -416,7 +416,7 @@ Tim *Penalty(char *Team1, char *Team2)
     return winner;
 }
 
-void sortTeamByHeadToHead(Group **group)
+/*void sortTeamByHeadToHead(Group **group)
 {
     for (int i = 0; i < 4; i++)
     {
@@ -467,7 +467,7 @@ void sortTeamByHeadToHead(Group **group)
         } while (swapped);
     }
     sortTeamByGoal(group);
-}
+}*/
 
 Tim *winnerMoveToParent(Tim *leftChild, Tim *rightChild)
 {
@@ -492,7 +492,6 @@ Tim *winnerMoveToParent(Tim *leftChild, Tim *rightChild)
 
     // Assign the winner to the parent node
     parent->namaTim = winner->namaTim;
-    parent->loseBy = NULL;
     parent->gol = 0;
     parent->jumlahGol = 0;
     parent->score = 0;
@@ -603,39 +602,42 @@ Tim *createTree()
 
 
     MatchTree(leaf1,leaf2);
-    printf("\n\nMatch 1 ");
+    printf("\n\nTeam 1 : %s", leaf1->namaTim);
     getch();
     Sm1=winnerMoveToParent(leaf1,leaf2);
     
     MatchTree(leaf3,leaf4);
-    printf("Match 2 ");
+    printf("\n\nTeam 2 : %s", leaf4->namaTim);
     getch();
     Sm2=winnerMoveToParent(leaf3,leaf4);
 
     MatchTree(leaf5,leaf6);
-    printf("Match 3 ");
+    printf("\n\nTeam 3 : %s", leaf3->namaTim);
     getch();
     Sm3=winnerMoveToParent(leaf5,leaf6);
 
     MatchTree(leaf7,leaf8);
-    printf("Match 4 ");
+    printf("\n\nTeam 4 : %s", leaf2->namaTim);
     getch();
     Sm4=winnerMoveToParent(leaf7,leaf8);
 
     MatchTree(Sm1,Sm2);
-    printf("Match Semi Final 1 ");
+    printf("\n\nTeam 5 : %s", leaf5->namaTim);
     getch();
     final1=winnerMoveToParent(Sm1,Sm2);
 
     MatchTree(Sm3,Sm4);
-    printf("Match Semi Final 2 ");
+    printf("\n\nTeam 6 : %s", leaf8->namaTim);
     getch();
     final2=winnerMoveToParent(Sm3,Sm4);
 
     MatchTree(final1,final2);
-    printf("Match Final ");
+    printf("\n\nTeam 7 : %s", leaf7->namaTim);
     getch();
     root=winnerMoveToParent(final1,final2);
+    printf("\n\nTeam 8 : %s", leaf6->namaTim);
+    getch();
+
     printf("\n\nPress any key to continue...\n\n");
     getch();
     printf("\n\n\t\t\t\t\t\t\tTournament Bracket\n\n");
@@ -726,11 +728,15 @@ void PrintTree4(Tim *root){
 }
 
 void printMatchHistory(Tim *tim) {
-    printf("Riwayat Pertandingan %s:\n", tim->namaTim);
+    printf("Riwayat Pertandingan %s:\n\n", tim->namaTim);
     MatchResult *match = tim->matchResultHead;
     while (match != NULL) {
         printf("Pertandingan : \nLawan = %s\nGoal = %d\nStatus = %s\n\n",
                match->versus,match->goals,match->status);
         match = match->next;
     }
+}
+
+void alokString(char **value){
+   *value = (char *) malloc(100 * sizeof(char));
 }
