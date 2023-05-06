@@ -4,11 +4,18 @@
 #include <time.h>
 #include <stdbool.h>
 //Abstrak data untuk node team.
-typedef struct tim
-{
+typedef struct match_result {
+    char *versus;
+    int goals;
+    char *status;
+    struct match_result *next;
+} MatchResult;
+
+typedef struct tim {
     char *namaTim, *loseBy;
     struct tim *next, *prev, *left, *right;
-    int gol, jumlahGol, score;
+    MatchResult *matchResultHead;
+    int gol, jumlahGol, score, win, draw, lose;
 } Tim;
 
 //Abstrak data untuk grup.
@@ -21,6 +28,7 @@ typedef struct group
 Group *group[4];
 Tim *tim;
 Tim *tree;
+MatchResult *match_result;
 
 Tim *makeTim(char *namaTim);
 /*
@@ -112,7 +120,7 @@ Modul untuk menghapus seluruh tim.
 IS: Seluruh tim belum reset setiap variable nodenya.
 FS: Seluruh tim telah reset setiap variable nodenya.
 */
-void PrintTree(Tim *root);
+void PrintTree1(Tim *root);
 /*
 Modul untuk menampilkan tree.
 IS: Tree dan namatim belum tampil.

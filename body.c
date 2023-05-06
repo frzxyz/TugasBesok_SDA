@@ -11,6 +11,10 @@ Tim *makeTim(char *namaTim)
     tim->gol = 0;
     tim->jumlahGol = 0;
     tim->score = 0;
+    tim->win = 0;
+    tim->lose = 0;
+    tim->draw = 0;
+    tim->matchResultHead=NULL;
     return tim;
 }
 
@@ -197,6 +201,29 @@ Tim *searchTeam(Group **group, char *key)
     return current;
 }
 
+int isMatchResultEmpty(Tim *tim) {
+    return (tim->matchResultHead == NULL);
+}
+
+void add_history(Tim *team, int goal, char *status, char *versus){
+    MatchResult *newMatchResult = (MatchResult*) malloc(sizeof(MatchResult));
+    newMatchResult->versus = versus;
+    newMatchResult->goals = goal;
+    newMatchResult->status = status;
+    newMatchResult->next = NULL;
+
+    if(isMatchResultEmpty(team)){
+        team->matchResultHead = newMatchResult;
+    }
+    else{
+        MatchResult *current = team->matchResultHead;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = newMatchResult;
+    }
+}
+
 void resultmatch(char *tim1, char *tim2)
 {
     time_t t;
@@ -209,8 +236,9 @@ void resultmatch(char *tim1, char *tim2)
     if (result == 1)
     {
         team1->score = team1->score + 0;
-        team1->loseBy = team2->namaTim;
         team2->score = team2->score + 3;
+        team2->win = team2->win + 1;
+        team1->lose = team1->lose + 1;
         while (cek == true)
         {
             srand((unsigned)time(&t));
@@ -220,6 +248,8 @@ void resultmatch(char *tim1, char *tim2)
             {
                 team1->jumlahGol = team1->jumlahGol + team1->gol;
                 team2->jumlahGol = team2->jumlahGol + team2->gol;
+                add_history(team1,team1->gol,"lose",team2->namaTim);
+                add_history(team2,team2->gol,"Win",team1->namaTim);
                 cek = false;
             }
         }
@@ -228,7 +258,8 @@ void resultmatch(char *tim1, char *tim2)
     {
         team1->score = team1->score + 3;
         team2->score = team2->score + 0;
-        team2->loseBy = team1->namaTim;
+        team1->win = team1->win + 1;
+        team2->win = team2->lose+ 1;
         while (cek == true)
         {
             srand((unsigned)time(&t));
@@ -238,6 +269,8 @@ void resultmatch(char *tim1, char *tim2)
             {
                 team1->jumlahGol = team1->jumlahGol + team1->gol;
                 team2->jumlahGol = team2->jumlahGol + team2->gol;
+                add_history(team2,team2->gol,"lose",team1->namaTim);
+                add_history(team1,team1->gol,"Win",team2->namaTim);
                 cek = false;
             }
         }
@@ -246,8 +279,8 @@ void resultmatch(char *tim1, char *tim2)
     {
         team1->score = team1->score + 1;
         team2->score = team2->score + 1;
-        team2->loseBy = team1->namaTim;
-        team1->loseBy = team2->namaTim;
+        team1->draw = team1->draw + 1;
+        team2->draw = team2->draw + 1;
         while (cek == true)
         {
             srand((unsigned)time(&t));
@@ -257,6 +290,8 @@ void resultmatch(char *tim1, char *tim2)
             {
                 team1->jumlahGol = team1->jumlahGol + team1->gol;
                 team2->jumlahGol = team2->jumlahGol + team2->gol;
+                add_history(team1,team1->gol,"Draw",team2->namaTim);
+                add_history(team2,team2->gol,"Draw",team1->namaTim);
                 cek = false;
             }
         }
@@ -264,64 +299,76 @@ void resultmatch(char *tim1, char *tim2)
     printf("Result %-7s VS %-7s = %d : %d\n", team1->namaTim, team2->namaTim, team1->gol, team2->gol);
 }
 
-void match()
+void match1()
 {
+    printf("\n\t\tWeek 1");
     resultmatch("Prancis", "Brasil");
     getch();
     resultmatch("Portugal", "Belanda");
     getch();
-    resultmatch("Prancis", "Portugal");
-    getch();
-    resultmatch("Brasil", "Belanda");
-    getch();
-    resultmatch("Prancis", "Belanda");
-    getch();
-    resultmatch("Brasil", "Portugal");
-    getch();
-    printf("\n\n");
-
     resultmatch("Senegal", "Inggris");
     getch();
     resultmatch("Amerika", "Australia");
+    getch();
+    resultmatch("Argentina", "Polandia");
+    getch();
+    resultmatch("Maroko", "Kroasia");
+    getch();
+    resultmatch("Jepang", "Spanyol");
+    getch();
+    resultmatch("Korea", "Swiss");
+    getch();
+    printf("\n\nPress any key to continue...\n\n");
+    getch();
+    
+}
+
+void match2()
+{
+    printf("\n\t\tWeek 2");
+    resultmatch("Prancis", "Portugal");
+    getch();
+    resultmatch("Brasil", "Belanda");
     getch();
     resultmatch("Senegal", "Amerika");
     getch();
     resultmatch("Inggris", "Australia");
     getch();
-    resultmatch("Senegal", "Australia");
-    getch();
-    resultmatch("Inggris", "Amerika");
-    getch();
-    printf("\n\n");
-
-    resultmatch("Argentina", "Polandia");
-    getch();
-    resultmatch("Maroko", "Kroasia");
-    getch();
     resultmatch("Argentina", "Maroko");
     getch();
     resultmatch("Polandia", "Kroasia");
     getch();
-    resultmatch("Argentina", "Kroasia");
-    getch();
-    resultmatch("Polandia", "Maroko");
-    getch();
-    printf("\n\n");
-
-    resultmatch("Jepang", "Spanyol");
-    getch();
-    resultmatch("Korea", "Swiss");
-    getch();
     resultmatch("Jepang", "Korea");
     getch();
     resultmatch("Spanyol", "Swiss");
+    getch();
+    printf("\n\nPress any key to continue...\n\n");
+    getch();   
+}
+
+void match3()
+{
+    printf("\n\t\tWeek 3");
+    resultmatch("Prancis", "Belanda");
+    getch();
+    resultmatch("Brasil", "Portugal");
+    getch();
+    resultmatch("Senegal", "Australia");
+    getch();
+    resultmatch("Inggris", "Amerika");
+    getch();
+    resultmatch("Argentina", "Kroasia");
+    getch();
+    resultmatch("Polandia", "Maroko");
     getch();
     resultmatch("Jepang", "Swiss");
     getch();
     resultmatch("Spanyol", "Korea");
     printf("\n\nPress any key to continue...\n\n");
     getch();
+    
 }
+
 
 Tim *Penalty(char *Team1, char *Team2)
 {
@@ -554,26 +601,54 @@ Tim *createTree()
     leaf8 = group[2]->pointer->next;
     root->right->right->right = leaf8;
 
-    MatchTree(leaf1,leaf2);
-    Sm1=winnerMoveToParent(leaf1,leaf2);
 
+    MatchTree(leaf1,leaf2);
+    printf("\n\nMatch 1 ");
+    getch();
+    Sm1=winnerMoveToParent(leaf1,leaf2);
+    
     MatchTree(leaf3,leaf4);
+    printf("Match 2 ");
+    getch();
     Sm2=winnerMoveToParent(leaf3,leaf4);
 
     MatchTree(leaf5,leaf6);
+    printf("Match 3 ");
+    getch();
     Sm3=winnerMoveToParent(leaf5,leaf6);
 
     MatchTree(leaf7,leaf8);
+    printf("Match 4 ");
+    getch();
     Sm4=winnerMoveToParent(leaf7,leaf8);
 
     MatchTree(Sm1,Sm2);
+    printf("Match Semi Final 1 ");
+    getch();
     final1=winnerMoveToParent(Sm1,Sm2);
 
     MatchTree(Sm3,Sm4);
+    printf("Match Semi Final 2 ");
+    getch();
     final2=winnerMoveToParent(Sm3,Sm4);
 
     MatchTree(final1,final2);
+    printf("Match Final ");
+    getch();
     root=winnerMoveToParent(final1,final2);
+    printf("\n\nPress any key to continue...\n\n");
+    getch();
+    printf("\n\n\t\t\t\t\t\t\tTournament Bracket\n\n");
+    PrintTree1(root);
+    printf("\n\nPress any key to continue...\n\n");
+    getch();
+    PrintTree2(root);
+    printf("\n\nPress any key to continue...\n\n");
+    getch();
+    PrintTree3(root);
+    printf("\n\nPress any key to continue...\n\n");
+    getch();
+    PrintTree4(root);
 
     return root;
 }
@@ -594,7 +669,49 @@ void clearTeam(Group **group){
     }
 }
 
-void PrintTree(Tim *root){
+void PrintTree1(Tim *root){
+    printf("\n\t\t\t\t\t\t\t         |       |");
+    printf("\n\t\t\t         ____________________________________|__________________________________");
+    printf("\n\t\t\t        |                                                                       |");
+    printf("\n\t\t        (%d) |       |\t\t\t\t\t\t\t\t    |       | (%d)",0,0);
+    printf("\n\t          ______________|___________________\t\t\t\t          ______________|___________________");
+    printf("\n\t         |                                  |\t\t\t\t         |                                  |");
+    printf("\n         (%d) |       |\t\t\t        |       | (%d)\t\t         (%d) |       |                          |      | (%d)",0, 0,0,0);
+    printf("\n          _______|______\t\t     _______|_______\t\t          _______|_______\t\t     _______|_______");
+    printf("\n         |              |\t\t    |               |\t\t         |               |\t\t    |               |");
+    printf("\n (%d) |%-7s|\t    |%-7s| (%d)   (%d) |%-7s|        |%-7s| (%d)", root->left->left->left->gol,root->left->left->left->namaTim, root->left->left->right->namaTim, root->left->left->right->gol, root->left->right->left->gol,root->left->right->left->namaTim,root->left->right->right->namaTim, root->left->right->right->gol);
+    printf(" (%d) |%-7s|       |%-7s| (%d)   (%d)|%-7s|       |%-7s| (%d)", root->right->left->left->gol,root->right->left->left->namaTim, root->right->left->right->namaTim, root->right->left->right->gol, root->right->right->left->gol,root->right->right->left->namaTim,root->right->right->right->namaTim, root->right->right->right->gol);
+}
+
+void PrintTree2(Tim *root){
+     printf("\n\t\t\t\t\t\t\t         |       |");
+    printf("\n\t\t\t         ____________________________________|__________________________________");
+    printf("\n\t\t\t        |                                                                       |");
+    printf("\n\t\t        (%d) |       |\t\t\t\t\t\t\t\t    |       | (%d)",0,0);
+    printf("\n\t          ______________|___________________\t\t\t\t          ______________|___________________");
+    printf("\n\t         |                                  |\t\t\t\t         |                                  |");
+    printf("\n        (%d) |%-7s|\t\t\t       |%-7s| (%d)\t\t         (%d) |%-7s|                         |%-7s| (%d)", root->left->left->gol, root->left->left->namaTim,root->left->right->namaTim, root->left->right->gol, root->right->left->gol,root->right->left->namaTim,root->right->right->namaTim, root->right->right->gol);
+    printf("\n          _______|______\t\t     _______|_______\t\t          _______|_______\t\t     _______|_______");
+    printf("\n         |              |\t\t    |               |\t\t         |               |\t\t    |               |");
+    printf("\n (%d) |%-7s|\t    |%-7s| (%d)   (%d) |%-7s|        |%-7s| (%d)", root->left->left->left->gol,root->left->left->left->namaTim, root->left->left->right->namaTim, root->left->left->right->gol, root->left->right->left->gol,root->left->right->left->namaTim,root->left->right->right->namaTim, root->left->right->right->gol);
+    printf(" (%d) |%-7s|       |%-7s| (%d)   (%d)|%-7s|       |%-7s| (%d)", root->right->left->left->gol,root->right->left->left->namaTim, root->right->left->right->namaTim, root->right->left->right->gol, root->right->right->left->gol,root->right->right->left->namaTim,root->right->right->right->namaTim, root->right->right->right->gol);
+}
+
+void PrintTree3(Tim *root){
+    printf("\n\t\t\t\t\t\t\t         |       |");
+    printf("\n\t\t\t         ____________________________________|__________________________________");
+    printf("\n\t\t\t        |                                                                       |");
+    printf("\n\t\t        (%d) |%-7s|\t\t\t\t\t\t\t\t   |%-7s| (%d)",root->left->gol, root->left->namaTim,root->right->namaTim,root->right->gol);
+    printf("\n\t          ______________|___________________\t\t\t\t          ______________|___________________");
+    printf("\n\t         |                                  |\t\t\t\t         |                                  |");
+    printf("\n        (%d) |%-7s|\t\t\t       |%-7s| (%d)\t\t         (%d) |%-7s|                         |%s| (%d)", root->left->left->gol, root->left->left->namaTim,root->left->right->namaTim, root->left->right->gol, root->right->left->gol,root->right->left->namaTim,root->right->right->namaTim, root->right->right->gol);
+    printf("\n          _______|______\t\t     _______|_______\t\t          _______|_______\t\t     _______|_______");
+    printf("\n         |              |\t\t    |               |\t\t         |               |\t\t    |               |");
+    printf("\n (%d) |%-7s|\t    |%-7s| (%d)   (%d) |%-7s|        |%-7s| (%d)", root->left->left->left->gol,root->left->left->left->namaTim, root->left->left->right->namaTim, root->left->left->right->gol, root->left->right->left->gol,root->left->right->left->namaTim,root->left->right->right->namaTim, root->left->right->right->gol);
+    printf(" (%d) |%-7s|       |%-7s| (%d)   (%d)|%-7s|       |%-7s| (%d)", root->right->left->left->gol,root->right->left->left->namaTim, root->right->left->right->namaTim, root->right->left->right->gol, root->right->right->left->gol,root->right->right->left->namaTim,root->right->right->right->namaTim, root->right->right->right->gol);
+}
+
+void PrintTree4(Tim *root){
     printf("\n\t\t\t\t\t\t\t         |%-7s|", root->namaTim);
     printf("\n\t\t\t         ____________________________________|__________________________________");
     printf("\n\t\t\t        |                                                                       |");
@@ -605,5 +722,15 @@ void PrintTree(Tim *root){
     printf("\n          _______|______\t\t     _______|_______\t\t          _______|_______\t\t     _______|_______");
     printf("\n         |              |\t\t    |               |\t\t         |               |\t\t    |               |");
     printf("\n (%d) |%-7s|\t    |%-7s| (%d)   (%d) |%-7s|        |%-7s| (%d)", root->left->left->left->gol,root->left->left->left->namaTim, root->left->left->right->namaTim, root->left->left->right->gol, root->left->right->left->gol,root->left->right->left->namaTim,root->left->right->right->namaTim, root->left->right->right->gol);
-    printf(" (%d) |%-7s|\t     |%-7s| (%d)   (%d)|%-7s|\t|%-7s| (%d)", root->right->left->left->gol,root->right->left->left->namaTim, root->right->left->right->namaTim, root->right->left->right->gol, root->right->right->left->gol,root->right->right->left->namaTim,root->right->right->right->namaTim, root->right->right->right->gol);
+    printf(" (%d) |%-7s|       |%-7s| (%d)   (%d)|%-7s|       |%-7s| (%d)", root->right->left->left->gol,root->right->left->left->namaTim, root->right->left->right->namaTim, root->right->left->right->gol, root->right->right->left->gol,root->right->right->left->namaTim,root->right->right->right->namaTim, root->right->right->right->gol);
+}
+
+void printMatchHistory(Tim *tim) {
+    printf("Riwayat Pertandingan %s:\n", tim->namaTim);
+    MatchResult *match = tim->matchResultHead;
+    while (match != NULL) {
+        printf("Pertandingan : \nLawan = %s\nGoal = %d\nStatus = %s\n\n",
+               match->versus,match->goals,match->status);
+        match = match->next;
+    }
 }
