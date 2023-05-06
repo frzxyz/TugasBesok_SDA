@@ -126,3 +126,22 @@ Modul untuk menampilkan tree.
 IS: Tree dan namatim belum tampil.
 FS: Tree dan namatim sudah tampil.
 */
+void PrintTree2(Tim *root);
+/*
+Modul untuk menampilkan tree.
+IS: Tree dan namatim belum tampil.
+FS: Tree dan namatim sudah tampil.
+*/
+void PrintTree3(Tim *root);
+/*
+Modul untuk menampilkan tree.
+IS: Tree dan namatim belum tampil.
+FS: Tree dan namatim sudah tampil.
+*/
+void PrintTree4(Tim *root);
+/*
+Modul untuk menampilkan tree.
+IS: Tree dan namatim belum tampil.
+FS: Tree dan namatim sudah tampil.
+*/
+
