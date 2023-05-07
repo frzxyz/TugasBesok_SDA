@@ -416,7 +416,7 @@ Tim *Penalty(char *Team1, char *Team2)
     return winner;
 }
 
-/*void sortTeamByHeadToHead(Group **group)
+void sortTeamByHeadToHead(Group **group)
 {
     for (int i = 0; i < 4; i++)
     {
@@ -427,11 +427,11 @@ Tim *Penalty(char *Team1, char *Team2)
             swapped = 0;
             while (current != NULL && current->next != NULL)
             {
-                if ((current->score == current->next->score) && (current->jumlahGol == current->next->jumlahGol) && (current->loseBy == current->next->namaTim && current->next->loseBy == current->namaTim))
+                if ((current->matchResultHead->versus == current->next->namaTim && current->matchResultHead->status == "Lose") && (current->next->matchResultHead->versus == current->namaTim && current->next->matchResultHead->status == "Lose"))
                 {
                     Penalty(current->namaTim, current->next->namaTim);
                 }
-                else if (current->score == current->next->score && (current->jumlahGol == current->next->jumlahGol) && (current->loseBy == current->next->namaTim))
+                else if (current->score == current->next->score && (current->jumlahGol == current->next->jumlahGol) && (current->matchResultHead->versus == current->next->namaTim && current->matchResultHead->status == "Lose"))
                 {
                     Tim *temp = current;
                     current = current->next;
@@ -467,7 +467,7 @@ Tim *Penalty(char *Team1, char *Team2)
         } while (swapped);
     }
     sortTeamByGoal(group);
-}*/
+}
 
 Tim *winnerMoveToParent(Tim *leftChild, Tim *rightChild)
 {
@@ -738,7 +738,7 @@ void PrintTree4(Tim *root){
 }
 
 void printMatchHistory(Tim *tim) {
-    printf("Riwayat Pertandingan %s:\n\n", tim->namaTim);
+    printf("\nRiwayat Pertandingan %s:\n\n", tim->namaTim);
     MatchResult *match = tim->matchResultHead;
     while (match != NULL) {
         printf("Pertandingan : \nLawan = %s\nGoal = %d\nStatus = %s\n\n",
@@ -747,6 +747,23 @@ void printMatchHistory(Tim *tim) {
     }
 }
 
-void alokString(char **value){
-   *value = (char *) malloc(100 * sizeof(char));
+void PrintHistory(Group **group){
+    bool cek = true;
+    int repeat;
+    char team[100];
+    Tim *cekHistory;
+    while(cek){
+        printf("\nInsert Team History : ");
+        scanf("%s", team);
+        cekHistory = searchTeam(group,team);
+        printMatchHistory(cekHistory);
+        printf("\nrepeat? Yes(1) / No(2) : ");
+        scanf("%d", &repeat);
+        if(repeat == 2){
+            cek = false;
+        }
+        else{
+            cek = true;
+        }
+    }
 }
