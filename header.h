@@ -144,4 +144,27 @@ Modul untuk menampilkan tree.
 IS: Tree dan namatim belum tampil.
 FS: Tree dan namatim sudah tampil.
 */
+void printMatchHistory(Tim *tim);
+/*
+Modul untuk menampilkan history tim yang dicari.
+IS: History team belum tampil.
+FS: History team sudah tampil
+*/
+void PrintHistory(Group **group);
+/*
+Modul untuk mencari team dan memanggil modul printmatchhistory.
+IS: Tim yang akan ditampilkan match historynya belum ketemu dan belum tampil.
+FS: Tim yang akan ditampilkan match historynya sudah ketemu dan sudah tampil.
+*/
+void add_history(Tim *team, int goal, char *status, char *versus);
+/*
+Modul untuk menambahkan history pertandingan setiap tim.
+IS: History pertandingan setiap tim belum disimpan.
+FS: History pertandingan setiap tim sudah disimpan
+*/
+int isMatchResultEmpty(Tim *tim);
+/*
+Fungsi untuk mengecek apakah history masih kosong atau tidak dan akan mengembalikan
+pointer head.
+*/
 

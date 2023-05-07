@@ -9,6 +9,7 @@ int main()
     group [1] = makeGroup("B",fp);
     group [2] = makeGroup("C",fp);
     group [3] = makeGroup("D",fp);
+    fclose(fp);
     for(int i = 1; i <=3; i++){
         displayGroup(group,4);
         printf("\n\nPress any key to continue...\n\n");
@@ -30,6 +31,5 @@ int main()
     clearTeam(group);
     tree = createTree();
     PrintHistory(group);
-    fclose(fp);
     return 0;
 }
