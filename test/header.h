@@ -167,4 +167,4 @@ int isMatchResultEmpty(Tim *tim);
 Fungsi untuk mengecek apakah history masih kosong atau tidak dan akan mengembalikan
 pointer head.
 */
-
+void ui();
