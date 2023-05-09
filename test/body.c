@@ -15,6 +15,7 @@ Tim *makeTim(char *namaTim)
     tim->lose = 0;
     tim->draw = 0;
     tim->matchResultHead=NULL;
+    tim->MP = 0;
     return tim;
 }
 
@@ -62,21 +63,21 @@ void displayGroup(Group **group, int numsGroup)
     for (int i = 0; i < numsGroup; i++)
     {
         printf(" GROUP %s\n", group[i]->namaGroup);
-        printf("+------------------------------------------+-----------+------------+------------+\n");
-        printf("|    Team        |    Score   |    Goal    |    Win    |    Lose    |    Draw    |\n");
-        printf("|----------------+------------+------------+-----------+------------+------------|\n");
+        printf("+-------------------------------------------------------+-----------+------------+------------+\n");
+        printf("|    Team        |     MP     |    Score   |    Goal    |    Win    |    Lose    |    Draw    |\n");
+        printf("|----------------+------------+------------+------------+-----------+------------+------------|\n");
         Tim *current;
         current = group[i]->pointer;
         while (current != NULL)
         {
-            printf("| %-15s|      %-6d|     %-7d|     %-6d|     %-7d|     %-7d|\n", current->namaTim, current->score, current->jumlahGol,current->win,current->lose,current->draw);
+            printf("| %-15s|      %-6d|      %-6d|     %-7d|     %-6d|     %-7d|     %-7d|\n", current->namaTim, current->MP,current->score, current->jumlahGol,current->win,current->lose,current->draw);
             if (current->next != NULL)
             {
-                printf("|----------------+------------+------------+-----------+------------+------------|\n");
+                printf("|----------------+------------+------------+------------+-----------+------------+------------|\n");
             }
             else
             {
-                printf("+--------------------------------------------------------------------------------+\n");
+                printf("+---------------------------------------------------------------------------------------------+\n");
             }
             current = current->next;
         }
@@ -231,6 +232,8 @@ void resultmatch(char *tim1, char *tim2)
     bool cek = true;
     Tim *team1 = searchTeam(group, tim1);
     Tim *team2 = searchTeam(group, tim2);
+    team1->MP = team1->MP + 1;
+    team2->MP = team2->MP + 1;
     srand((unsigned)time(&t));
     result = 1 + rand() % 3;
     if (result == 1)
@@ -511,6 +514,8 @@ void MatchTree(Tim *team1, Tim *team2){
     bool cek = true;
     Tim *left = searchTeam(group, team1->namaTim);
     Tim *right = searchTeam(group, team2->namaTim);
+    left->MP = left->MP + 1;
+    right->MP = right->MP + 1;
     srand((unsigned)time(&t));
     result = 1 + rand() % 2;
     if (result == 1)
@@ -738,8 +743,10 @@ void PrintTree4(Tim *root){
 }
 
 void printMatchHistory(Tim *tim) {
-    printf("\nRiwayat Pertandingan %s:\n\n", tim->namaTim);
+    printf("\nRiwayat Pertandingan %s:\n", tim->namaTim);
+    printf("Match Played : %d\n\n", tim->MP);
     MatchResult *match = tim->matchResultHead;
+
     while (match != NULL) {
         printf("Pertandingan : \nLawan = %s\nGoal = %d\nStatus = %s\n\n",
                match->versus,match->goals,match->status);

@@ -1,4 +1,4 @@
-#include "header.h"
+#include "body.c"
 #include <string.h>
 #include <conio.h>
 
@@ -11,7 +11,7 @@ int main()
     group [3] = makeGroup("D",fp);
     fclose(fp);
     ui();
-    /*for(int i = 1; i <=3; i++){
+    for(int i = 1; i <=3; i++){
         displayGroup(group,4);
         printf("\n\nPress any key to continue...\n\n");
         getch();
@@ -31,7 +31,7 @@ int main()
     displayGroup(group,4);
     clearTeam(group);
     tree = createTree();
-    PrintHistory(group);*/
+    PrintHistory(group);
     getch();
     return 0;
     

@@ -15,7 +15,7 @@ typedef struct tim {
     char *namaTim, *loseBy;
     struct tim *next, *prev, *left, *right;
     MatchResult *matchResultHead;
-    int gol, jumlahGol, score, win, draw, lose;
+    int gol, jumlahGol, score, win, draw, lose, MP;
 } Tim;
 
 //Abstrak data untuk grup.
