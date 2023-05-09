@@ -12,10 +12,10 @@ typedef struct match_result {
 } MatchResult;
 
 typedef struct tim {
-    char *namaTim, *loseBy;
+    char *namaTim;
     struct tim *next, *prev, *left, *right;
     MatchResult *matchResultHead;
-    int gol, jumlahGol, score, win, draw, lose, MP;
+    int gol, score, win, draw, lose, MP, SG;
 } Tim;
 
 //Abstrak data untuk grup.

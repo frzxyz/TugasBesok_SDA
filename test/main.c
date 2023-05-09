@@ -13,7 +13,7 @@ int main()
     ui();
     for(int i = 1; i <=3; i++){
         displayGroup(group,4);
-        printf("\n\nPress any key to continue...\n\n");
+        printf("\nPress any key to continue...\n\n");
         getch();
         if(i == 1){
             match1();
@@ -32,7 +32,6 @@ int main()
     clearTeam(group);
     tree = createTree();
     PrintHistory(group);
-    getch();
     return 0;
     
 }
