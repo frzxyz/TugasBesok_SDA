@@ -1,8 +1,6 @@
 {
   "version": "0.2.0",
   "configurations": [
-    
-
     {
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
@@ -10,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Firman/OneDrive/Documents/semester 2/SDA/TUBES/TugasBesok_SDA",
-      "program": "c:/Users/Firman/OneDrive/Documents/semester 2/SDA/TUBES/TugasBesok_SDA/build/Debug/outDebug",
+      "cwd": "c:/Users/Firman/OneDrive/Documents/Firman/semester 2/SDA/TUBES/TugasBesok_SDA/test",
+      "program": "c:/Users/Firman/OneDrive/Documents/Firman/semester 2/SDA/TUBES/TugasBesok_SDA/test/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
